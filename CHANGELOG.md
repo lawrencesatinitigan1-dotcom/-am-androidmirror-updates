@@ -1,6 +1,42 @@
+[CHANGELOG.md](https://github.com/user-attachments/files/31295551/CHANGELOG.md)
 # Changelog
 
-## v4.1.14 (Latest)
+## v4.1.16 (Latest)
+
+### Added
+- **Automatic background update check** — runs once, ~5s after launch,
+  against the same manifest Tools > About > Check for Updates already
+  used. Silent when there's nothing new; when there is, it shows a small
+  dot on Tools and About, a tray menu item ("⬆️ Update available: vX.Y.Z"),
+  and (where supported) a Windows notification — without forcing a modal
+  open or interrupting anything.
+- **Skip this version** — next to the Download Update button, lets you
+  dismiss a specific release so the background check won't re-notify about
+  it (it'll still notify about anything newer). Stored per-PC in
+  `update-prefs.json` under the app's userData folder.
+- **Update checksum verification** — the manifest can now carry an
+  optional `"sha256"` field; after a download finishes, the file is hashed
+  and compared, and the result ("✅ Checksum verified" / "⚠️ Checksum
+  mismatch") is shown next to the download. Manifests without a `sha256`
+  field behave exactly as before — no checksum note is shown.
+- **Install Now** button after a successful download — launches the
+  installer directly and quits the app, instead of only offering "Show in
+  Folder" and leaving the rest to you. Hidden if the checksum came back a
+  confirmed mismatch.
+
+## v4.1.15
+
+### Fixed
+- **Update download had no visible progress.** The "Download" link on
+  Tools > About > Check for Updates was a plain `target="_blank"` anchor;
+  Electron opened it as a blank, chrome-less popup window and let the file
+  save to the Downloads folder silently in the background — nothing in the
+  app ever indicated a download was happening, even though it was. Replaced
+  it with a "Download Update" button wired through a real `will-download`
+  handler in the main process, so the button now shows live percentage
+  progress and, once finished, a "Show in folder" action.
+
+## v4.1.14
 
 ### Added
 - **Restart with new settings** (🔄 button on each session) — stops and
