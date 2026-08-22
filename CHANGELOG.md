@@ -1,7 +1,45 @@
-[CHANGELOG.md](https://github.com/user-attachments/files/31324388/CHANGELOG.md)
+[CHANGELOG.md](https://github.com/user-attachments/files/31327018/CHANGELOG.md)
 # Changelog
 
-## v4.1.18 (Latest)
+## v4.1.19 (Latest)
+
+### Fixed
+- **Mini HUD stayed empty if opened after a phone was already connected.**
+  `main.js` only ever broadcast session events to the Mini HUD window while
+  it was already open, so a session started before you opened Tools > Mini
+  HUD was invisible to it - the HUD just showed "No active sessions"
+  forever, even with a phone actively mirroring. It now asks the main
+  process for a full snapshot of whatever's already running the moment it
+  opens, and hydrates itself from that.
+- **"Connected to" bar's battery % went stale.** It only ever showed the
+  reading taken once at connect time, baked into plain text, while the
+  Active Sessions row next to it kept updating live every ~45s. The bar
+  now has its own battery badge - visually identical to the Active
+  Sessions one - that stays in sync with the same live poll.
+- **Installed Apps pin (⭐) button was oversized and unbalanced.** Same
+  root cause as the "Copy All" fix in v4.1.18: it was inheriting the
+  global button rule's `min-width: 130px` and flex-grow instead of sizing
+  to its icon. It now has its own compact, fixed-width sizing to match the
+  other small icon buttons in the app.
+- **Tools modals (Manage Phones, App Launcher, Recent Captures, session
+  config, etc.) could reopen mid-scroll.** Only the outer modal's scroll
+  position was reset when opening it; several modals also have their own
+  separately-scrolling inner list, which kept whatever scroll position it
+  was left at from the last time that modal was open. Every modal now
+  resets to the top on open, outer and inner scroll regions alike.
+
+### Added
+- **Manual port entry** next to the port slider in Register Phone (Tools
+  > Register Phone) - type an exact port instead of dragging the slider,
+  including ports outside the slider's 5556–5655 quick-pick range. Leave
+  both blank for USB devices, same as before.
+- **Tooltips on every remaining Configuration option** that didn't already
+  have one - Video Bitrate, Max Resolution, Max FPS, Video Codec, Keyboard
+  Input Mode, and every Session Options checkbox now explain what they do
+  and which scrcpy flag they map to, matching the existing tooltips on
+  Mouse Mode, Orientation, Audio Codec/Bitrate, and Software Window Size.
+
+## v4.1.18
 
 ### Fixed
 - **"Copy All" button was oversized.** A global button rule (min-width
