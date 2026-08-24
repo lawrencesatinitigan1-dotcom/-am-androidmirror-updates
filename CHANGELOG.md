@@ -1,7 +1,71 @@
-[CHANGELOG.md](https://github.com/user-attachments/files/31327018/CHANGELOG.md)
+[Uploading CHANGELOG.md…]()
 # Changelog
 
-## v4.1.19 (Latest)
+## v4.1.21 (Latest)
+
+### Added
+- **Reboot Device** (♻️ on each Active Sessions row) — reboots the phone
+  via `adb -s <device> reboot`, gated behind a confirmation dialog since it
+  ends the current session as a side effect (the phone drops off adb the
+  instant it reboots). A Wi-Fi session with **Auto-reconnect** enabled
+  will pick back up on its own once the phone finishes booting, same as
+  any other unexpected drop.
+- **Screen power toggle** (🌙/🔆 on each Active Sessions row) — turns the
+  phone's own display off to save battery on a long session, or back on,
+  without disconnecting. Input, clipboard sync, and file transfer keep
+  working the whole time; only the phone's screen changes. Implemented by
+  reading current wakefulness from `dumpsys power` and only sending the
+  `POWER` keyevent (`input keyevent 26`) when that would actually flip it
+  the requested direction, so the button can't get out of sync with the
+  phone's real state. The state is also remembered on the live session and
+  included in `get-active-sessions`, so the Mini HUD shows a matching
+  "🌙 Screen off" badge even if it's opened *after* the screen was already
+  toggled off, not just from that point forward.
+- **Export Terminal Log** — a new "💾 Export" button next to **Clear** in
+  the Terminal Output header saves the current log to a plain-text file
+  via a native save dialog, useful for attaching to a bug report.
+- **Do Not Disturb** (Tools menu) — silences ambient Windows notifications
+  (update available, low battery, "gave up reconnecting") without
+  touching anything else in the app. Notifications that directly confirm
+  something you just did — a hotkey screenshot, the panic-button's stop
+  count — still show either way, since those aren't the kind of
+  interruption DND is meant to quiet. Persisted per-PC in
+  `dnd-prefs.json` under the app's userData folder, same pattern as
+  Always on Top.
+- **Restart ADB Server** (Tools menu) — a one-click fix for a phone that
+  isn't being detected, equivalent to running `adb kill-server` followed
+  by `adb start-server` from a terminal. Refuses to run while any session
+  is active, so it can't yank the connection out from under a live
+  mirror — stop your sessions first if you need it.
+
+## v4.1.20
+
+### Fixed
+- **Battery badge and low-battery alert didn't recognize USB charging.**
+  Charging state was read only from `dumpsys battery`'s `AC powered:`
+  flag. Android reports three independent power sources - `AC powered`,
+  `USB powered`, and `Wireless powered` - and a phone charging over the
+  same USB cable it's mirroring through (by far the most common case in
+  this app) reports `AC powered: false`, so it was being read as not
+  charging. That meant the battery badge showed no ⚡ for a USB-charging
+  phone, and - more seriously - a phone happily charging over USB could
+  still trip the "low battery and not charging" notification. All three
+  power sources are now checked (`parseChargingState()` in `main.js`,
+  shared by the live battery poll and `get-device-details`), and the
+  active source is now reported too, so the battery badge's tooltip can
+  say which one it is (e.g. "charging via USB") on Active Sessions rows,
+  the "Connected to" bar, and the Mini HUD.
+- **Recent Captures row buttons (📋 copy path, 📲 push to device, Show,
+  🗑️ delete) were unevenly stretched.** Same root cause as the "Copy All"
+  fix in v4.1.18 and the App Launcher pin fix in v4.1.19: these buttons
+  only ever carried `.btn-modal-action`, which doesn't override the
+  global `button` rule's `flex: 1 1 30%` / `min-width: 130px` meant for
+  the big toolbar buttons - so inside their own compact 4-across row they
+  stretched unevenly instead of sizing to their icon/label. They now have
+  their own `.capture-action-btn` sizing, matching the other small icon
+  buttons in the app.
+
+## v4.1.19
 
 ### Fixed
 - **Mini HUD stayed empty if opened after a phone was already connected.**
