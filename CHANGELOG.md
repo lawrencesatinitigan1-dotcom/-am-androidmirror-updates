@@ -1,7 +1,40 @@
-[CHANGELOG.md](https://github.com/user-attachments/files/31407381/CHANGELOG.md)
+[CHANGELOG.md](https://github.com/user-attachments/files/31441674/CHANGELOG.md)
 # Changelog
 
-## v4.1.24 (Latest)
+## v4.1.25 (Latest)
+
+### Added
+- **Edit Registration now supports Custom Port too.** The same port
+  slider + manual entry from Register Phone is now available when editing
+  an already-registered Wi-Fi device from Manage Phones - reassign which
+  port a phone is tracked under (or assign one for the first time)
+  without removing and re-registering it. Changing it pushes the new port
+  to the phone via ADB and carries over its trusted-device status, saved
+  default settings, and lockout state to the new registration
+  automatically. Hidden for USB-only devices, same as Register Phone.
+
+### Changed
+- **App name now shows the running version.** The window title (title
+  bar, taskbar, Alt-Tab) now reads "AM(AndroidMirror) vX.Y.Z" instead of
+  just the app name.
+- **Friendlier update-check error.** Connection/certificate failures
+  while checking for updates used to surface a raw, technical Node.js
+  message (e.g. an OpenSSL certificate-verification error). They now show
+  a single plain-language "⚠️ Check Internet connection or use VPN"
+  instead.
+- Corrected **Year Created** in Tools > About to "January 2026".
+
+### Fixed
+- **Installing an update could show "please close the app" and need a
+  Retry click even though the app had already closed.** The installer
+  used to be launched at almost the exact same moment the app called
+  quit, so its "is this app still running?" check could catch the app's
+  shutdown a moment too early and wrongly report it as still open. The
+  installer now launches through a small hidden helper process that waits
+  for the app to fully exit first, so that check always finds it
+  genuinely closed.
+
+## v4.1.24
 
 ### Changed
 - **Active Sessions rows decluttered.** The 📋 Copy, 📷 Screenshot, 📦 Browse
