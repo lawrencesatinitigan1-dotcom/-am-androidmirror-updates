@@ -1,7 +1,43 @@
-[Uploading CHANGELOG.md…]()
+[CHANGELOG.md](https://github.com/user-attachments/files/31407381/CHANGELOG.md)
 # Changelog
 
-## v4.1.23 (Latest)
+## v4.1.24 (Latest)
+
+### Changed
+- **Active Sessions rows decluttered.** The 📋 Copy, 📷 Screenshot, 📦 Browse
+  Apps, ⚙️ Configuration, 🔄 Restart, 🌙/🔆 Screen toggle, ♻️ Reboot, and
+  📈 Wi-Fi graph buttons on each row are now collapsed behind a single ⋮
+  "More actions" menu. **Stop** stays on the row as its own direct button,
+  since it's both the one you reach for in a hurry and the one action
+  worth not burying a click deeper. The menu is positioned in JS (like the
+  app's existing overflow-safe tooltip) so it doesn't get clipped by the
+  scrolling Active Sessions list.
+
+### Fixed
+- **Version badge next to the app name could get stuck on its placeholder
+  ("v...") forever.** It previously relied entirely on a single one-shot
+  message from the main process, sent once when the window first became
+  ready — if that message went out before the badge's listener had
+  finished registering (or anything earlier on the page failed), nothing
+  ever corrected it afterward. The badge (and Tools > About) now also
+  fetch the version directly on page load instead of only waiting on that
+  broadcast.
+- **Tooltip could get stuck on-screen (or seem to "always show") after
+  whatever it was pointing at suddenly closed or disappeared.** The
+  overflow-safe tooltip used on Active Sessions rows and Session
+  Configuration relied on a plain `mouseout` to hide itself, but Active
+  Sessions rebuilds its rows every second for the uptime timer - if the
+  row under the cursor happened to get rebuilt (or a modal closed) at that
+  exact instant, the element being hovered was destroyed before that
+  `mouseout` could fire, leaving the tooltip stranded with nothing left to
+  tell it to hide. It now tracks what it's anchored to and continuously
+  checks, on mouse movement, whether the cursor is still genuinely over
+  that element - hiding itself the moment that's no longer true, for any
+  reason. It also now hides immediately on any click, modal close, or
+  window blur, so a "sudden close" doesn't need a mouse movement
+  afterward to clear it.
+
+## v4.1.23
 
 ### Added
 - **Session Configuration is now editable.** Opening ⚙️ on an Active
