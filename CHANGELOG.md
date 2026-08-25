@@ -1,7 +1,38 @@
-[Uploading CHANGELOG.md…]()
+[CHANGELOG.md](https://github.com/user-attachments/files/31398804/CHANGELOG.md)
 # Changelog
 
-## v4.1.21 (Latest)
+## v4.1.22 (Latest)
+
+### Fixed
+- **Version badge next to the app name could render clipped.** The
+  `.app-version` pill had no `white-space`/`flex-shrink` control inside the
+  header's flex layout, so on a narrower window the version string could
+  wrap onto a second line or get squeezed enough to lose a trailing
+  character. It's now pinned to one line and can't shrink, so the full
+  `vX.Y.Z` always renders.
+
+### Added
+- **Tooltips on every Session Configuration row.** Opening ⚙️ on an Active
+  Sessions row now explains what each setting actually does when you hover
+  its name, including exactly what changes if it's **On** vs. **Off** for
+  every toggle (Forward Device Audio, Stay Awake, Show Touches, View Only,
+  Clipboard Sync, Auto-Reconnect, Recording, Grid Layout, and the rest),
+  reusing the same overflow-safe tooltip already used for Active Sessions
+  row buttons so nothing gets clipped scrolling through a long list.
+- **Mini HUD now follows the app's theme.** Previously the HUD was
+  permanently dark no matter what was picked in Tools > Appearance. It
+  reads the same saved theme (or "Sync with Windows theme" preference,
+  live) as the main window via the shared `localStorage` the two windows
+  already use for registered-device data, including custom colors - no new
+  main-process plumbing required.
+
+### Changed
+- **Magnified shortcuts list.** Rows in ⌨️ Shortcuts now gently zoom in as
+  the cursor gets close to them, tapering off across neighboring rows
+  (dock-style), making it quicker to spot which row you're currently
+  scanning in a long list.
+
+## v4.1.21
 
 ### Added
 - **Reboot Device** (♻️ on each Active Sessions row) — reboots the phone
