@@ -1,7 +1,23 @@
-[CHANGELOG.md](https://github.com/user-attachments/files/31398804/CHANGELOG.md)
+[Uploading CHANGELOG.md…]()
 # Changelog
 
-## v4.1.22 (Latest)
+## v4.1.23 (Latest)
+
+### Added
+- **Session Configuration is now editable.** Opening ⚙️ on an Active
+  Sessions row no longer just shows a read-only snapshot — every setting
+  (bitrate, resolution, FPS, codecs, keyboard/mouse mode, orientation
+  lock, audio, and all fifteen toggles) is now a live field in the modal,
+  using the same option sets as Tools > Configuration.
+- **⚡ Apply Now button.** Restarts just that one device with the edited
+  settings immediately, via the same `restartMirror` plumbing the existing
+  🔄 "Restart with current Configuration settings" button uses — every
+  other active session keeps mirroring undisturbed. If Recording gets
+  switched on from here, a fresh save-file prompt is resolved first the
+  same way starting a brand-new session already does, so the toggle
+  doesn't silently do nothing.
+
+## v4.1.22
 
 ### Fixed
 - **Version badge next to the app name could render clipped.** The
