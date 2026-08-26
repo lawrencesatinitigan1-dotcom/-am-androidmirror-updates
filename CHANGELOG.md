@@ -1,7 +1,51 @@
-[CHANGELOG.md](https://github.com/user-attachments/files/31445831/CHANGELOG.md)
+[Uploading CHANGELOG.md…]()
 # Changelog
 
-## v4.1.26 (Latest)
+## v4.1.27 (Latest)
+
+### Added
+- **Mini HUD quick actions.** Hovering a session row in the Mini HUD now
+  reveals two small buttons: 🌙/🔆 to toggle that device's screen on/off
+  (same as the main window's screen-off button, without needing to switch
+  to it), and ⏹ to stop that session directly from the HUD. Stop requires
+  a second click to confirm (the button turns into "Stop?" for a few
+  seconds) since the HUD has no undo for ending someone's mirror.
+- **Mini HUD session count.** The HUD's titlebar now shows a live count of
+  active sessions next to its title, so you can tell at a glance how many
+  are running without expanding the window or counting rows.
+- **Mini HUD filter box.** Once more than 3 sessions are active, a small
+  filter field appears under the HUD's titlebar - type any part of an
+  owner name or device ID to narrow the list live. It hides itself again
+  automatically once the session count drops back to 3 or fewer.
+- **Mini HUD compact mode.** A new ▤ button in the HUD's titlebar toggles
+  a denser row layout (drops the device-ID line and the uptime/model
+  badges, keeping owner, battery, and Wi-Fi quality) for fitting more
+  sessions in a short window. Remembered per-PC.
+- **Copy device ID from the Mini HUD.** Click a session's device-ID line
+  in the HUD to copy it to the clipboard - it flashes "Copied!" briefly
+  to confirm.
+- **"📱 Show App" button in the Mini HUD.** A new titlebar button brings
+  the main AM window to front on demand, without needing the taskbar or
+  the tray icon - handy since the HUD has no window border/taskbar entry
+  of its own to click back to.
+
+### Changed
+- **Mini HUD low-battery and poor-signal badges now pulse.** The 🔋
+  low-battery badge and the "Poor"/"No signal" Wi-Fi quality badge gently
+  fade in and out instead of sitting static, so a degrading session is
+  easier to notice out of the corner of your eye.
+- **The main AM window now also comes to front automatically when a
+  dropped Wi-Fi session reconnects**, not just when one disconnects -
+  previously only disconnects (and give-ups) brought it forward, so a
+  device quietly reconnecting while you were elsewhere went unannounced.
+- **Closing the main window now also closes the Mini HUD**, instead of
+  leaving it open on its own. Previously, if the HUD was open when the
+  main window's [X] was clicked, the app's own "close everything" logic
+  never reached the HUD (it's a separate top-level window), so it could
+  be left running with no sessions left to show and no way back to the
+  main app short of the Task Manager.
+
+## v4.1.26
 
 ### Added
 - **New Display.** The ⋮ menu on any Active Sessions row now has a
