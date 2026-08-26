@@ -1,7 +1,45 @@
-[CHANGELOG.md](https://github.com/user-attachments/files/31441674/CHANGELOG.md)
+[CHANGELOG.md](https://github.com/user-attachments/files/31445831/CHANGELOG.md)
 # Changelog
 
-## v4.1.25 (Latest)
+## v4.1.26 (Latest)
+
+### Added
+- **New Display.** The ⋮ menu on any Active Sessions row now has a
+  🖥️ **New Display** item, which opens a second, independent scrcpy
+  window for that phone on its own virtual display (`--new-display`,
+  requires Android 14+ on the phone) instead of mirroring its physical
+  screen - useful for running a second app alongside whatever's already
+  showing on the main mirror. Picking it opens the app picker so you can
+  choose what runs on the new display right away (a virtual display
+  otherwise starts out blank/white with nothing assigned to it, since
+  `--new-display` on its own creates the display but doesn't put
+  anything on it), with an **Open Blank** option for anyone who wants an
+  empty display on purpose. It's spawned and tracked completely
+  separately from the regular session: closing it doesn't stop the main
+  mirror, stopping the main mirror doesn't close it, and it's cleaned up
+  on app quit the same way any other session is.
+- **Auto-connect on this PC checkbox in Session Configuration.** The
+  same trusted-device toggle available in Manage Phones and the device
+  picker is now also available directly from **⋮ → ⚙️ View / edit
+  configuration**, saved immediately when checked/unchecked (it doesn't
+  require Apply Now).
+
+### Changed
+- **⚡ Apply Now only lights up once you've actually changed something.**
+  Opening a session's configuration used to leave Apply Now clickable
+  immediately, even with nothing edited - restarting the session for no
+  reason if clicked by mistake. It now stays disabled until at least one
+  field's value differs from what the session is actually running, and
+  re-disables itself if you edit a field back to its original value.
+
+### Fixed
+- **Manage Phones didn't follow the app's theme.** A phone's live
+  device-info line and its ⭐ Auto-connect on this PC checkbox label were
+  hardcoded to a light color meant for dark backgrounds, so they stayed
+  hard to read (or invisible) on a light custom theme. Both now use the
+  same theme-aware muted text color as the rest of the app.
+
+## v4.1.25
 
 ### Added
 - **Edit Registration now supports Custom Port too.** The same port
