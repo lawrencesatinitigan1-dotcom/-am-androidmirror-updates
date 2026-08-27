@@ -1,7 +1,36 @@
-[CHANGELOG.md](https://github.com/user-attachments/files/31494257/CHANGELOG.md)
+[Uploading CHANGELOG.md…]()
 # Changelog
 
-## v4.1.28 (Latest)
+## v4.1.29 (Latest)
+
+### Added
+- **Mini HUD remembers its own window size and position** across launches,
+  the same way the main window already does. Stored in the existing
+  `window-prefs.json` under a separate `hudBounds` key, saved ~600ms after
+  you stop resizing/dragging it. A saved position that no longer lands on a
+  connected display (e.g. a second monitor since unplugged) is ignored in
+  favor of Electron's default placement, same guard as the main window.
+- **Mini HUD sort order.** A new ⇅ titlebar button cycles the session list
+  through **Recent first** (existing connect order), **Name (A-Z)**, and
+  **Battery (low first)** - handy for spotting the phone closest to dying
+  in a longer list without hunting for it. Remembered per-PC.
+- **Pin a session to the top of the Mini HUD.** A new 📌 quick action (next
+  to 🌙/⏹ on each row) keeps that session pinned above the rest regardless
+  of sort mode. Pins are keyed by owner name rather than device ID/IP, so a
+  pin sticks even after that phone disconnects and reconnects later, and is
+  remembered per-PC.
+- **Mini HUD titlebar warns of trouble at a glance.** The session-count
+  badge now pulses red if *any* active session has a low, non-charging
+  battery or a poor/lost Wi-Fi link - visible even while the HUD is
+  minimized, behind other windows, or showing a filtered/collapsed list
+  where the affected row itself isn't on screen.
+- **Press `/` in the Mini HUD to jump to the filter box**, the same
+  convenience shortcut as most searchable lists. Unlike the normal
+  auto-shown box (which only appears once there are more than 3 sessions),
+  `/` reveals it early for a shorter list too; it hides itself again once
+  cleared and blurred, same as before.
+
+## v4.1.28
 
 ### Changed
 - **⚡ Apply Now now saves as a registered phone's master configuration.**
