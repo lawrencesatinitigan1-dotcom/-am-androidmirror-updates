@@ -1,7 +1,45 @@
-[Uploading CHANGELOG.md…]()
+[CHANGELOG.md](https://github.com/user-attachments/files/31494257/CHANGELOG.md)
 # Changelog
 
-## v4.1.27 (Latest)
+## v4.1.28 (Latest)
+
+### Changed
+- **⚡ Apply Now now saves as a registered phone's master configuration.**
+  Applying settings from ⋮ → ⚙️ View / edit configuration for a device
+  that's already registered and marked ⭐ Auto-connect on this PC now also
+  saves those settings as that device's own default config, the same as
+  Manage Phones → 💾 Save as default would - so its own settings take over
+  the next time it auto-connects instead of falling back to whatever's
+  sitting in Tools > Configuration. Devices that aren't already marked
+  auto-connect are left untouched; Apply Now never flips that on by
+  itself.
+- **Dropdown menus (Tools, and a session row's ⋮ menu) now also close
+  automatically once the cursor genuinely leaves them**, instead of
+  requiring an explicit click elsewhere first. A short grace delay keeps
+  moving from the button to the menu itself from flicker-closing it.
+
+### Fixed
+- **Installing an update could quit the app without actually launching
+  the installer.** The helper process responsible for waiting for the
+  app to close and then starting the installer was itself still tied to
+  this app's own Windows process group (job object) - {detached:true}
+  only frees a child process from this app's console group on Windows,
+  not from that job. On setups where the app runs inside a job with
+  "kill remaining processes on close" set (some launchers/terminals do
+  this), the waiting helper got torn down together with the app the
+  moment it quit, before it ever reached the point of starting the
+  installer - so the app closed but nothing opened. The helper is now
+  handed off to the OS shell instead of spawned directly, so it survives
+  independently of whatever job this app itself belongs to.
+- **Edit Registration's port slider could reset to "No Port" every time
+  the modal was reopened** for a Wi-Fi device still keyed by its full
+  "ip:port" identifier (e.g. one registered before the port-slider
+  feature existed), instead of showing the port it's actually assigned
+  to. It now reads the port out of the identifier (or the device's saved
+  connection string) instead of only recognizing devices already filed
+  under a bare numeric port.
+
+## v4.1.27
 
 ### Added
 - **Mini HUD quick actions.** Hovering a session row in the Mini HUD now
