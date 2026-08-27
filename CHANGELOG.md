@@ -1,7 +1,76 @@
-[Uploading CHANGELOG.md…]()
+[CHANGELOG.md](https://github.com/user-attachments/files/31534236/CHANGELOG.md)
 # Changelog
 
-## v4.1.29 (Latest)
+## v4.1.30 (Latest)
+
+### Added
+- **Custom IP scan range.** A new "🌐 Scan Range" field above Start Connect
+  lets you type a subnet's first 3 octets with a trailing dot (e.g.
+  `192.168.28.`) to restrict the Auto/Wi-Fi scan to that subnet's 4th octet
+  (1-254) instead of only ever auto-detecting whatever subnet(s) this PC's
+  own network adapters happen to be on - useful for a router's guest
+  network, a VLAN, or any subnet reachable but not directly attached.
+  Leave it blank to keep the previous auto-detect behavior. Remembered
+  per-PC, validated on entry, and re-validated in `scrcpy_connect.ps1`
+  before use; an invalid value falls back to auto-detection rather than
+  silently failing to scan anything.
+- **Five+ new background notifications**, all respecting Do Not Disturb the
+  same as the existing update/low-battery alerts:
+  - Wi-Fi link quality dropping to poor/lost during an active session
+    (re-arms once the link recovers, so a borderline connection doesn't
+    spam repeat alerts).
+  - Battery recovering from a low state (charging started, or level back
+    above the threshold) - the missing counterpart to the existing
+    low-battery alert.
+  - An in-app update finishing its download and being ready to install.
+  - A drag-and-drop APK install failing.
+  - A drag-and-drop file/folder transfer failing.
+  - A trusted device auto-connecting without the picker, so a silent
+    background auto-connect doesn't go unnoticed while the main window is
+    out of view.
+- **Notification Center (Tools > 🔔 Notifications).** Every kind of
+  notification the app can send now has its own on/off toggle - Updates,
+  Connections, Wi-Fi Link Quality, Battery, Disconnects, File & APK
+  Transfers, Screenshots & Recordings, and System Actions - instead of only
+  the single blanket Do Not Disturb switch. The same window also keeps a
+  **Recent Notifications** list of the last 50 that actually fired, each
+  with a timestamp, so anything missed as a Windows toast (app minimized,
+  stepped away, etc.) can still be reviewed, plus a **Clear** button to
+  empty it. Do Not Disturb still works exactly as before and mutes every
+  ambient category in one click from the same window (or the existing
+  Tools menu item); the per-type toggles are a new, finer-grained layer
+  underneath it, and are all remembered per-PC.
+- **More background notifications**, on top of the five above and
+  respecting the new per-category toggles:
+  - Wi-Fi link quality *recovering* back to good/fair after being
+    poor/lost - the missing counterpart to the poor/lost alert itself.
+  - A dropped Wi-Fi session *reconnecting* on its own (only fires after at
+    least one failed attempt, so a normal first connect stays silent).
+  - A session ending *unexpectedly* - covers a pulled USB cable or a
+    Wi-Fi drop with Auto-reconnect off, which previously stopped silently
+    unless reconnect attempts were also exhausted.
+  - A new **virtual display** (`--new-display`) starting on a device.
+  - **Wireless pairing** (Pair Device) succeeding.
+  - A drag-and-drop file/folder transfer or APK install finishing
+    *successfully* - previously only the failure case notified.
+  - A button-triggered **screenshot** saving (the global hotkey already
+    notified; the in-app 📷 button previously only showed an in-app toast).
+  - **Restart ADB Server** finishing.
+
+### Changed
+- **Owner's Name is now capped at 12 characters** in both Register Phone
+  and Edit Registration, with a live `(x/12)` counter next to the label.
+  Keeps the name from overflowing the titlebar, Active Sessions, and Mini
+  HUD, which all display it in a fairly tight space.
+
+### Fixed
+- **Tooltips now show up in Registered Phones (Manage Phones).** The
+  Edit/Remove buttons sit inside a scrolling list, which was clipping the
+  normal CSS tooltip before it could render - same underlying issue
+  already solved for Active Sessions' row buttons. They now use that same
+  overflow-safe tooltip.
+
+## v4.1.29
 
 ### Added
 - **Mini HUD remembers its own window size and position** across launches,
